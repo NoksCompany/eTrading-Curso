@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eTrading | Academia Privada de Trading desde Cero</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        night: {
+                            950: '#040711',
+                            900: '#070d1f',
+                            800: '#0d1633',
+                        },
+                        emeraldGlow: '#10b981',
+                        champagne: '#e2c792',
+                    },
+                    animation: {
+                        'marquee': 'marquee 42s linear infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-14px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+                            '50%': { opacity: '0.75', transform: 'scale(1.06)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos base y estética Liquid Glass avanzada */
+        body {
+            background-color: #040711;
+            color: #f8fafc;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Orbes ambientales líquidos en el fondo */
+        .liquid-orb {
+            position: fixed;
+            border-radius: 9999px;
+            filter: blur(110px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Panel Liquid Glass Principal */
+        .liquid-glass {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.025) 50%,
+                rgba(16, 185, 129, 0.03) 100%
+            );
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.55),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25),
+                inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Variación Liquid Glass para tarjetas interactivas */
+        .liquid-glass-card {
+            background: linear-gradient(
+                145deg,
+                rgba(17, 25, 48, 0.65) 0%,
+                rgba(9, 14, 28, 0.78) 100%
+            );
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.16);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .liquid-glass-card:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                0 0 25px rgba(16, 185, 129, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        }
+
+        /* Botón Liquid Glass metálico/esmeralda */
+        .btn-liquid-primary {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.85) 0%, rgba(5, 150, 105, 0.9) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 24px rgba(16, 185, 129, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            transition: all 0.3s ease;
+        }
+
+        .btn-liquid-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 30px rgba(16, 185, 129, 0.48),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-liquid-glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-liquid-glass:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(226, 199, 146, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* Texto degradado metálico/lujo */
+        .text-gradient-luxury {
+            background: linear-gradient(135deg, #ffffff 15%, #e2e8f0 48%, #e2c792 85%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Marquee continuo sin cortes */
+        .marquee-wrapper {
+            display: flex;
+            width: max-content;
+        }
+        .marquee-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        /* Ocultar controles nativos de descarga en video HTML5 */
+        video::-internal-media-controls-download-button {
+            display: none;
+        }
+        video::-webkit-media-controls-enclosure {
+            overflow: hidden;
+        }
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 30px);
+        }
+
+        /* Scrollbar personalizada elegante */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #040711;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.16);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <!-- Orbes de luz ambiental para potenciar el efecto Liquid Glass -->
+    <div class="liquid-orb w-[500px] h-[500px] bg-emerald-600/20 -top-32 -left-24 animate-pulse-glow"></div>
+    <div class="liquid-orb w-[600px] h-[600px] bg-blue-700/20 top-1/3 -right-40 animate-pulse-glow" style="animation-delay: 2s;"></div>
+    <div class="liquid-orb w-[450px] h-[450px] bg-amber-500/10 bottom-10 left-1/4 animate-pulse-glow" style="animation-delay: 4s;"></div>
+
+    <!-- 1. MARQUEE SUPERIOR MOTIVACIONAL -->
+    <div class="sticky top-0 z-40 w-full border-b border-white/10 bg-[#050917]/80 backdrop-blur-xl overflow-hidden py-2">
+        <div class="marquee-wrapper animate-marquee flex items-center whitespace-nowrap text-xs sm:text-sm font-medium tracking-wide text-slate-300">
+            <!-- Bloque 1 -->
+            <div class="flex items-center space-x-10 px-5">
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "La disciplina en el gráfico hoy es tu libertad financiera mañana."</span>
+                <span class="flex items-center gap-2 text-[#e2c792]"><span class="w-1.5 h-1.5 rounded-full bg-[#e2c792]"></span> "No necesitas adivinar el mercado, necesitas un método claro y probado."</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "Cada profesional fue primero un principiante que decidió dar el primer paso."</span>
+                <span class="flex items-center gap-2 text-[#e2c792]"><span class="w-1.5 h-1.5 rounded-full bg-[#e2c792]"></span> "Protege tu capital, domina tu mente y deja que la probabilidad trabaje a tu favor."</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "Aprender trading desde cero nunca fue tan claro, estructurado y directo."</span>
+            </div>
+            <!-- Bloque 2 (Duplicado exacto para loop fluido infinito) -->
+            <div class="flex items-center space-x-10 px-5" aria-hidden="true">
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "La disciplina en el gráfico hoy es tu libertad financiera mañana."</span>
+                <span class="flex items-center gap-2 text-[#e2c792]"><span class="w-1.5 h-1.5 rounded-full bg-[#e2c792]"></span> "No necesitas adivinar el mercado, necesitas un método claro y probado."</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "Cada profesional fue primero un principiante que decidió dar el primer paso."</span>
+                <span class="flex items-center gap-2 text-[#e2c792]"><span class="w-1.5 h-1.5 rounded-full bg-[#e2c792]"></span> "Protege tu capital, domina tu mente y deja que la probabilidad trabaje a tu favor."</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> "Aprender trading desde cero nunca fue tan claro, estructurado y directo."</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRA DE NAVEGACIÓN LIQUID GLASS -->
+    <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-2">
+        <nav class="liquid-glass rounded-2xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <!-- Marca -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400/20 to-blue-500/20 border border-white/20 flex items-center justify-center shadow-inner group-hover:border-emerald-400/50 transition">
+                    <i data-lucide="candlestick-chart" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <span class="font-display font-bold text-xl tracking-tight text-white">e<span class="text-emerald-400">Trading</span></span>
+            </a>
+
+            <!-- Enlaces centrales -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#metodologia" class="hover:text-white transition">Metodología</a>
+                <a href="#aula-privada" class="hover:text-white transition">Aula Virtual</a>
+                <a href="#garantia" class="hover:text-white transition">Por qué eTrading</a>
+            </div>
+
+            <!-- Estado de Sesión y Botones -->
+            <div id="nav-auth-area" class="flex items-center gap-2.5 sm:gap-3">
+                <!-- Se renderiza dinámicamente mediante JS según estado de sesión -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- 2. HERO SECTION MINIMALISTA Y ELEGANTE -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+        <section class="relative text-center max-w-4xl mx-auto pt-6 pb-12">
+            <!-- Badge superior -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass text-xs font-medium text-emerald-300 mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Formación Privada de Alto Rendimiento • Desde Cero</span>
+            </div>
+
+            <!-- TÍTULO PRINCIPAL GRANDE, MINIMALISTA Y ELEGANTE -->
+            <h1 class="font-display font-extralight text-6xl sm:text-8xl md:text-9xl tracking-[-0.04em] text-gradient-luxury leading-none mb-6 select-none">
+                eTrading
+            </h1>
+
+            <p class="text-base sm:text-xl text-slate-300/90 font-light max-w-2xl mx-auto leading-relaxed mb-10">
+                Domina los mercados financieros desde cero con un sistema explicado paso a paso, sin tecnicismos innecesarios y diseñado para que tomes el control con total seguridad.
+            </p>
+
+            <!-- Botones de Acción Hero -->
+            <div id="hero-cta-buttons" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <button onclick="openAuthModal('client')" class="w-full sm:w-auto btn-liquid-primary px-8 py-4 rounded-2xl font-semibold text-white flex items-center justify-center gap-2.5 text-sm sm:text-base cursor-pointer">
+                    <i data-lucide="play-circle" class="w-5 h-5"></i>
+                    <span>Acceso Alumnos</span>
+                </button>
+                <button onclick="openAuthModal('admin')" class="w-full sm:w-auto btn-liquid-glass px-8 py-4 rounded-2xl font-medium text-slate-200 flex items-center justify-center gap-2.5 text-sm sm:text-base cursor-pointer">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-[#e2c792]"></i>
+                    <span>Panel Administrador</span>
+                </button>
+            </div>
+
+            <!-- COMPOSICIÓN VISUAL DE TRADING LIQUID GLASS (Imágenes estratégicas) -->
+            <div class="relative grid grid-cols-1 md:grid-cols-12 gap-5 items-center text-left">
+                <!-- Imagen Principal Izquierda: Setup & Gráficos Limpios -->
+                <div class="md:col-span-7 liquid-glass rounded-3xl p-2.5 overflow-hidden group">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[16/10]">
+                        <img 
+                            src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=85" 
+                            onerror="this.src='https://placehold.co/1200x750/070d1f/10b981?text=Analisis+de+Mercado+eTrading'"
+                            alt="Gráficos financieros profesionales en pantalla" 
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-700 opacity-90"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#040711] via-[#040711]/30 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                            <div>
+                                <span class="text-[11px] uppercase tracking-widest text-emerald-400 font-semibold">Lectura Institucional</span>
+                                <h3 class="text-white font-display font-semibold text-lg">Aprende a leer el precio con claridad</h3>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-medium backdrop-blur-md">
+                                100% Práctico
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: 2 Tarjetas Visuales Apiladas -->
+                <div class="md:col-span-5 flex flex-col gap-5">
+                    <div class="liquid-glass rounded-3xl p-2.5 overflow-hidden group">
+                        <div class="relative rounded-2xl overflow-hidden aspect-[16/9]">
+                            <img 
+                                src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=900&q=85" 
+                                onerror="this.src='https://placehold.co/900x500/070d1f/e2c792?text=Gestion+de+Riesgo'"
+                                alt="Análisis técnico moderno" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-85"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#040711] via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-4">
+                                <p class="text-xs text-[#e2c792] font-medium">Paso a paso desde cero</p>
+                                <p class="text-sm font-semibold text-white">Sin experiencia previa requerida</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini métricas Liquid Glass -->
+                    <div class="liquid-glass rounded-3xl p-5 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider">Enfoque del Curso</p>
+                            <p class="text-base font-display font-semibold text-white mt-0.5">Claridad + Gestión + Psicología</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. AULA PRIVADA / SECCIÓN DE VIDEOS (RESTRINGIDA POR ROL) -->
+        <section id="aula-privada" class="py-12 scroll-mt-20">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-emerald-400">Plataforma Exclusiva</span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">Aula Privada de Formación</h2>
+                </div>
+                <div id="role-badge-indicator"></div>
+            </div>
+
+            <!-- CONTENEDOR DINÁMICO SEGÚN SESIÓN (Visitante / Cliente / Admin) -->
+            <div id="course-workspace" class="liquid-glass rounded-3xl p-6 sm:p-10 min-h-[380px] flex flex-col justify-center">
+                <!-- Renderizado dinámico en JS -->
+            </div>
+        </section>
+
+        <!-- 4. METODOLOGÍA Y CONFIANZA (Bloques Liquid Glass + Imágenes) -->
+        <section id="metodologia" class="py-16">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-semibold uppercase tracking-widest text-[#e2c792]">Estructura Probada</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">Diseñado para que entiendas cada movimiento</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-3">Olvídate de cursos confusos. Aquí cada lección está explicada con ejemplos reales y lenguaje sencillo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="liquid-glass-card rounded-3xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mb-6">
+                            <i data-lucide="compass" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-3">1. Bases Sólidas desde Cero</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Aprende cómo funcionan los mercados, cómo configurar tus plataformas y cómo interpretar velas japonesas y estructura sin sentirte abrumado.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-emerald-300">
+                        <span>Módulo Fundamental</span>
+                        <span>Nivel Inicial</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="liquid-glass-card rounded-3xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-[#e2c792]/15 border border-[#e2c792]/30 flex items-center justify-center text-[#e2c792] mb-6">
+                            <i data-lucide="shield" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-3">2. Gestión de Riesgo Blindada</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            El secreto de la longevidad en el trading. Aprende exactamente cuánto arriesgar en cada operación para proteger tu capital en todo momento.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-[#e2c792]">
+                        <span>Protección de Capital</span>
+                        <span>Reglas Claras</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="liquid-glass-card rounded-3xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-blue-400 mb-6">
+                            <i data-lucide="target" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-semibold text-white mb-3">3. Ejecución y Psicotrading</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Desarrolla la mentalidad fría y objetiva necesaria para ejecutar tu plan sin emociones, impulsos ni dudas frente al gráfico.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-blue-300">
+                        <span>Mentalidad Ganadora</span>
+                        <span>Enfoque Real</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANNER INFERIOR CON IMAGEN DE TRADING -->
+        <section id="garantia" class="py-6">
+            <div class="liquid-glass rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
+                <div class="lg:col-span-7 p-8 sm:p-12">
+                    <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-[#e2c792] mb-4">Tu momento de empezar</span>
+                    <h2 class="font-display text-2xl sm:text-4xl font-bold text-white leading-tight mb-4">
+                        El mejor momento para aprender una habilidad financiera fue ayer. El segundo mejor es hoy.
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base mb-8 max-w-xl">
+                        Accede con tus credenciales de alumno para visualizar las clases en alta definición desde cualquier dispositivo, a tu propio ritmo y sin distracciones.
+                    </p>
+                    <button onclick="openAuthModal('client')" class="btn-liquid-primary px-7 py-3.5 rounded-xl font-semibold text-white text-sm inline-flex items-center gap-2 cursor-pointer">
+                        <i data-lucide="log-in" class="w-4 h-4"></i>
+                        <span>Iniciar Sesión en mi Cuenta</span>
+                    </button>
+                </div>
+                <div class="lg:col-span-5 h-64 lg:h-full relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=85" 
+                        onerror="this.src='https://placehold.co/800x600/070d1f/10b981?text=eTrading+Pro'"
+                        alt="Workspace financiero elegante" 
+                        class="w-full h-full object-cover opacity-85"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#070d1f] via-[#070d1f]/40 to-transparent hidden lg:block"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#070d1f] via-transparent to-transparent lg:hidden"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER MINIMALISTA -->
+    <footer class="border-t border-white/10 py-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="font-display font-bold text-white text-sm">e<span class="text-emerald-400">Trading</span></span>
+                <span>• Todos los derechos reservados.</span>
+            </div>
+            <p class="text-center sm:text-right text-slate-500">
+                Aviso: El contenido es estrictamente educativo y formativo. Opera siempre con responsabilidad.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL DE INICIO DE SESIÓN (ADMIN Y CLIENTE)                           -->
+    <!-- ===================================================================== -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+        <div class="liquid-glass rounded-3xl w-full max-w-md p-7 sm:p-8 relative animate-[fadeIn_0.25s_ease-out]">
+            <button onclick="closeAuthModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 flex items-center justify-center text-slate-300 transition cursor-pointer">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Selector de Pestaña -->
+            <div class="flex p-1 rounded-2xl bg-black/40 border border-white/10 mb-6">
+                <button id="tab-client" onclick="switchAuthTab('client')" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition cursor-pointer">
+                    Acceso Cliente
+                </button>
+                <button id="tab-admin" onclick="switchAuthTab('admin')" class="flex-1 py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition cursor-pointer">
+                    Administrador
+                </button>
+            </div>
+
+            <div id="auth-header" class="mb-6">
+                <h3 id="auth-title" class="font-display text-2xl font-bold text-white">Portal de Alumnos</h3>
+                <p id="auth-subtitle" class="text-xs sm:text-sm text-slate-400 mt-1">Introduce las credenciales activadas por tu mentor.</p>
+            </div>
+
+            <form id="auth-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Usuario</label>
+                    <div class="relative">
+                        <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input id="login-username" type="text" required autocomplete="off" placeholder="Tu usuario" 
+                            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Contraseña</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input id="login-password" type="password" required placeholder="••••••••••••" 
+                            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition">
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                    <span id="login-error-text">Credenciales incorrectas.</span>
+                </div>
+
+                <button type="submit" class="w-full btn-liquid-primary py-3.5 rounded-xl font-semibold text-white text-sm mt-2 cursor-pointer">
+                    Entrar a la Plataforma
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TOAST / NOTIFICACIÓN DEL SISTEMA (Reemplazo elegante de alert)        -->
+    <!-- ===================================================================== -->
+    <div id="system-toast" class="fixed top-16 right-4 z-50 hidden items-center gap-3 liquid-glass px-4 py-3 rounded-2xl border-emerald-400/40 text-sm text-white shadow-2xl">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+        <span id="system-toast-msg">Acción completada</span>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- 4. POP-UP DE RESEÑAS DINÁMICO (ESQUINA INFERIOR DERECHA)               -->
+    <!-- ===================================================================== -->
+    <div id="review-popup" class="fixed bottom-5 right-5 z-40 max-w-xs sm:max-w-sm w-[calc(100%-2.5rem)] liquid-glass rounded-2xl p-4 shadow-2xl transition-all duration-500 translate-y-8 opacity-0 pointer-events-none">
+        <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div id="review-avatar" class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500/30 to-blue-500/30 border border-white/20 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                    CM
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <p id="review-name" class="text-xs font-semibold text-white">Carlos Mendoza</p>
+                        <span class="inline-flex items-center text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded-full">
+                            ✓ Alumno
+                        </span>
+                    </div>
+                    <div id="review-stars" class="flex items-center gap-0.5 mt-0.5 text-[#e2c792]">
+                        <!-- Estrellas dinámicas (3, 4 o 5) -->
+                    </div>
+                </div>
+            </div>
+            <button onclick="dismissReviewPopup()" class="text-slate-400 hover:text-white p-1 transition cursor-pointer" title="Cerrar reseña">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+        </div>
+        <p id="review-text" class="text-xs text-slate-300 leading-relaxed mt-2.5">
+            "Empecé sin saber absolutamente nada de gráficos y la claridad con la que explican cada paso es increíble."
+        </p>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- LÓGICA DE APLICACIÓN, SEGURIDAD, ROLES Y REPRODUCTOR PRIVADO          -->
+    <!-- ===================================================================== -->
+    <script>
+        // =========================================================================
+        // 1. CREDENCIALES SEGURAS DE ADMINISTRADOR PRE-GENERADAS
+        // =========================================================================
+        const ADMIN_CREDENTIALS = {
+            username: "etrading_adm89X",
+            password: "Tr@d3r#VauLt!2026$Pro"
+        };
+
+        // Claves de almacenamiento persistente en navegador
+        const STORAGE_KEYS = {
+            VIDEOS: "etrading_course_videos_v1",
+            CLIENTS: "etrading_active_clients_v1",
+            SESSION: "etrading_current_session_v1"
+        };
+
+        // Estado global en memoria
+        let currentAuthMode = "client";
+        let activeVideoId = null;
+
+        // =========================================================================
+        // 2. GESTIÓN DE DATOS (LOCALSTORAGE)
+        // =========================================================================
+        function getVideos() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEYS.VIDEOS)) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveVideos(videos) {
+            localStorage.setItem(STORAGE_KEYS.VIDEOS, JSON.stringify(videos));
+        }
+
+        function getClients() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEYS.CLIENTS)) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveClients(clients) {
+            localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(clients));
+        }
+
+        function getSession() {
+            try {
+                return JSON.parse(sessionStorage.getItem(STORAGE_KEYS.SESSION)) || null;
+            } catch {
+                return null;
+            }
+        }
+
+        function setSession(sessionObj) {
+            if (sessionObj) {
+                sessionStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(sessionObj));
+            } else {
+                sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+            }
+        }
+
+        // Notificación Toast elegante
+        function showToast(message) {
+            const toast = document.getElementById("system-toast");
+            const msgEl = document.getElementById("system-toast-msg");
+            msgEl.textContent = message;
+            toast.classList.remove("hidden");
+            toast.classList.add("flex");
+            setTimeout(() => {
+                toast.classList.add("hidden");
+                toast.classList.remove("flex");
+            }, 3400);
+        }
+
+        // =========================================================================
+        // 3. MODAL DE AUTENTICACIÓN
+        // =========================================================================
+        function openAuthModal(mode = "client") {
+            switchAuthTab(mode);
+            document.getElementById("login-error").classList.add("hidden");
+            document.getElementById("auth-form").reset();
+            const modal = document.getElementById("auth-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById("auth-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        function switchAuthTab(mode) {
+            currentAuthMode = mode;
+            const tabClient = document.getElementById("tab-client");
+            const tabAdmin = document.getElementById("tab-admin");
+            const title = document.getElementById("auth-title");
+            const subtitle = document.getElementById("auth-subtitle");
+
+            document.getElementById("login-error").classList.add("hidden");
+
+            if (mode === "client") {
+                tabClient.className = "flex-1 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-emerald-500/25 text-emerald-300 border border-emerald-400/30 transition cursor-pointer";
+                tabAdmin.className = "flex-1 py-2.5 text-xs sm:text-sm font-medium rounded-xl text-slate-400 hover:text-white transition cursor-pointer";
+                title.textContent = "Portal de Alumnos";
+                subtitle.textContent = "Introduce el usuario y contraseña activados para ver las clases.";
+            } else {
+                tabAdmin.className = "flex-1 py-2.5 text-xs sm:text-sm font-semibold rounded-xl bg-[#e2c792]/20 text-[#e2c792] border border-[#e2c792]/30 transition cursor-pointer";
+                tabClient.className = "flex-1 py-2.5 text-xs sm:text-sm font-medium rounded-xl text-slate-400 hover:text-white transition cursor-pointer";
+                title.textContent = "Acceso Administrador";
+                subtitle.textContent = "Área exclusiva para gestión de videos y activación de alumnos.";
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("login-username").value.trim();
+            const passwordInput = document.getElementById("login-password").value;
+            const errorBox = document.getElementById("login-error");
+            const errorText = document.getElementById("login-error-text");
+
+            if (currentAuthMode === "admin") {
+                if (usernameInput === ADMIN_CREDENTIALS.username && passwordInput === ADMIN_CREDENTIALS.password) {
+                    setSession({ role: "admin", username: usernameInput });
+                    closeAuthModal();
+                    renderApp();
+                    showToast("Sesión de Administrador iniciada correctamente");
+                    document.getElementById("aula-privada").scrollIntoView({ behavior: "smooth" });
+                } else {
+                    errorText.textContent = "Usuario o contraseña de administrador inválidos.";
+                    errorBox.classList.remove("hidden");
+                }
+            } else {
+                const clients = getClients();
+                const validClient = clients.find(c => c.username === usernameInput && c.password === passwordInput);
+                if (validClient) {
+                    setSession({ role: "client", username: validClient.username, fullName: validClient.name || validClient.username });
+                    closeAuthModal();
+                    renderApp();
+                    showToast(`Bienvenido al curso, ${validClient.name || validClient.username}`);
+                    document.getElementById("aula-privada").scrollIntoView({ behavior: "smooth" });
+                } else {
+                    errorText.textContent = "Cuenta no activada o credenciales incorrectas.";
+                    errorBox.classList.remove("hidden");
+                }
+            }
+        }
+
+        function logout() {
+            setSession(null);
+            activeVideoId = null;
+            renderApp();
+            showToast("Has cerrado sesión de forma segura");
+        }
+
+        // =========================================================================
+        // 4. ACCIONES DEL ADMINISTRADOR (PUBLICAR VIDEOS Y CREAR CLIENTES)
+        // =========================================================================
+        function handlePublishVideo(event) {
+            event.preventDefault();
+            const title = document.getElementById("vid-title").value.trim();
+            const moduleTag = document.getElementById("vid-module").value.trim() || "Módulo Principal";
+            const description = document.getElementById("vid-desc").value.trim();
+            const urlInput = document.getElementById("vid-url").value.trim();
+            const fileInput = document.getElementById("vid-file");
+
+            if (!title) return;
+
+            // Si el administrador subió un archivo local MP4/WebM
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const blobUrl = URL.createObjectURL(file);
+                saveNewVideoObject({
+                    id: "vid_" + Date.now(),
+                    title,
+                    moduleTag,
+                    description,
+                    sourceType: "direct",
+                    src: blobUrl,
+                    createdAt: new Date().toLocaleDateString("es-ES")
+                });
+                event.target.reset();
+                return;
+            }
+
+            if (!urlInput) {
+                showToast("Por favor indica una URL de video o selecciona un archivo.");
+                return;
+            }
+
+            // Detectar si es YouTube o enlace directo MP4
+            const ytId = extractYouTubeId(urlInput);
+            if (ytId) {
+                saveNewVideoObject({
+                    id: "vid_" + Date.now(),
+                    title,
+                    moduleTag,
+                    description,
+                    sourceType: "youtube",
+                    src: ytId,
+                    createdAt: new Date().toLocaleDateString("es-ES")
+                });
+            } else {
+                saveNewVideoObject({
+                    id: "vid_" + Date.now(),
+                    title,
+                    moduleTag,
+                    description,
+                    sourceType: "direct",
+                    src: urlInput,
+                    createdAt: new Date().toLocaleDateString("es-ES")
+                });
+            }
+            event.target.reset();
+        }
+
+        function saveNewVideoObject(videoObj) {
+            const videos = getVideos();
+            videos.push(videoObj);
+            saveVideos(videos);
+            activeVideoId = videoObj.id;
+            renderApp();
+            showToast("Clase publicada exitosamente en el curso");
+        }
+
+        function deleteVideo(id) {
+            const videos = getVideos().filter(v => v.id !== id);
+            saveVideos(videos);
+            if (activeVideoId === id) {
+                activeVideoId = videos.length ? videos[0].id : null;
+            }
+            renderApp();
+            showToast("Video eliminado del curso");
+        }
+
+        function handleCreateClient(event) {
+            event.preventDefault();
+            const name = document.getElementById("client-name").value.trim();
+            const username = document.getElementById("client-user").value.trim();
+            const password = document.getElementById("client-pass").value.trim();
+
+            if (!username || !password) return;
+
+            const clients = getClients();
+            if (clients.some(c => c.username.toLowerCase() === username.toLowerCase())) {
+                showToast("Ese nombre de usuario ya existe.");
+                return;
+            }
+
+            clients.push({
+                id: "cli_" + Date.now(),
+                name: name || username,
+                username,
+                password,
+                createdAt: new Date().toLocaleDateString("es-ES")
+            });
+            saveClients(clients);
+            event.target.reset();
+            renderApp();
+            showToast(`Cuenta activada para ${username}`);
+        }
+
+        function deleteClient(id) {
+            const clients = getClients().filter(c => c.id !== id);
+            saveClients(clients);
+            renderApp();
+            showToast("Acceso de cliente revocado");
+        }
+
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // =========================================================================
+        // 5. RENDERIZADO DINÁMICO DE INTERFAZ SEGÚN ROL
+        // =========================================================================
+        function renderApp() {
+            const session = getSession();
+            const navAuth = document.getElementById("nav-auth-area");
+            const roleBadge = document.getElementById("role-badge-indicator");
+            const workspace = document.getElementById("course-workspace");
+
+            // Actualizar navegación superior
+            if (!session) {
+                navAuth.innerHTML = `
+                    <button onclick="openAuthModal('client')" class="btn-liquid-glass px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-white cursor-pointer">
+                        Iniciar Sesión
+                    </button>
+                    <button onclick="openAuthModal('admin')" class="w-9 h-9 rounded-xl btn-liquid-glass flex items-center justify-center text-[#e2c792] cursor-pointer" title="Acceso Administrador">
+                        <i data-lucide="key-round" class="w-4 h-4"></i>
+                    </button>
+                `;
+                roleBadge.innerHTML = `
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-slate-400">
+                        <i data-lucide="lock" class="w-3.5 h-3.5 text-amber-400"></i> Contenido Protegido
+                    </span>
+                `;
+                renderLockedView(workspace);
+            } else if (session.role === "admin") {
+                navAuth.innerHTML = `
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#e2c792]/15 border border-[#e2c792]/30 text-[#e2c792] text-xs font-semibold">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Admin
+                    </span>
+                    <button onclick="logout()" class="btn-liquid-glass px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-red-300 hover:border-red-400/40 flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Salir
+                    </button>
+                `;
+                roleBadge.innerHTML = `
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e2c792]/15 border border-[#e2c792]/30 text-xs text-[#e2c792] font-medium">
+                        Modo Administrador Activo
+                    </span>
+                `;
+                renderAdminView(workspace);
+            } else if (session.role === "client") {
+                navAuth.innerHTML = `
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-medium">
+                        <i data-lucide="user-check" class="w-3.5 h-3.5"></i> ${escapeHtml(session.username)}
+                    </span>
+                    <button onclick="logout()" class="btn-liquid-glass px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-200 flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Cerrar Sesión
+                    </button>
+                `;
+                roleBadge.innerHTML = `
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-xs text-emerald-300 font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Alumno Verificado
+                    </span>
+                `;
+                renderClientPlayerView(workspace);
+            }
+
+            lucide.createIcons();
+        }
+
+        // Vista para usuarios NO autenticados (Bloqueada / Vacía por seguridad)
+        function renderLockedView(container) {
+            container.innerHTML = `
+                <div class="text-center max-w-lg mx-auto py-8">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center mx-auto mb-5 shadow-inner">
+                        <i data-lucide="lock" class="w-7 h-7 text-[#e2c792]"></i>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold text-white mb-2">Área Exclusiva para Alumnos</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-7">
+                        Las lecciones en video del curso <strong class="text-white">eTrading</strong> son privadas. Inicia sesión con tu usuario y contraseña activados para acceder al reproductor del curso.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                        <button onclick="openAuthModal('client')" class="w-full sm:w-auto btn-liquid-primary px-6 py-3 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="log-in" class="w-4 h-4"></i>
+                            <span>Iniciar Sesión como Cliente</span>
+                        </button>
+                        <button onclick="openAuthModal('admin')" class="w-full sm:w-auto btn-liquid-glass px-6 py-3 rounded-xl text-sm font-medium text-slate-300 flex items-center justify-center gap-2 cursor-pointer">
+                            <i data-lucide="shield" class="w-4 h-4 text-[#e2c792]"></i>
+                            <span>Soy Administrador</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Vista completa de Administrador (Subir videos + Crear/Gestionar clientes + Vista previa)
+        function renderAdminView(container) {
+            const videos = getVideos();
+            const clients = getClients();
+
+            container.innerHTML = `
+                <div class="space-y-10">
+                    <!-- Fila superior: Publicar Video y Activar Cliente -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- FORMULARIO PUBLICAR VIDEO -->
+                        <div class="liquid-glass-card rounded-2xl p-6">
+                            <div class="flex items-center gap-2.5 mb-5">
+                                <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                                    <i data-lucide="video" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-display font-bold text-lg text-white">Publicar Nueva Clase</h3>
+                                    <p class="text-xs text-slate-400">Añade videos por enlace (MP4 / YouTube) o archivo local</p>
+                                </div>
+                            </div>
+
+                            <form onsubmit="handlePublishVideo(event)" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs text-slate-300 mb-1">Título de la Clase *</label>
+                                        <input id="vid-title" type="text" required placeholder="Ej: Clase 1 - Estructura de Mercado" 
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-emerald-400">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-300 mb-1">Módulo / Etiqueta</label>
+                                        <input id="vid-module" type="text" placeholder="Ej: Módulo 1 • Desde Cero" 
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-emerald-400">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1">URL del Video (MP4 directo o enlace de YouTube)</label>
+                                    <input id="vid-url" type="url" placeholder="https://... (o sube un archivo abajo)" 
+                                        class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-emerald-400">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1">O subir archivo de video desde tu equipo (.mp4, .webm)</label>
+                                    <input id="vid-file" type="file" accept="video/*" 
+                                        class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 cursor-pointer">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1">Explicación / Notas de la clase</label>
+                                    <textarea id="vid-desc" rows="2" placeholder="Resumen claro de lo que aprenderá el alumno en este video..." 
+                                        class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-emerald-400"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full btn-liquid-primary py-3 rounded-xl font-semibold text-white text-sm flex items-center justify-center gap-2 cursor-pointer">
+                                    <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                                    <span>Publicar Video en el Curso</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- FORMULARIO ACTIVAR CUENTA DE CLIENTE -->
+                        <div class="liquid-glass-card rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-2.5 mb-5">
+                                    <div class="w-9 h-9 rounded-xl bg-[#e2c792]/20 border border-[#e2c792]/30 flex items-center justify-center text-[#e2c792]">
+                                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-display font-bold text-lg text-white">Activar Cuenta de Cliente</h3>
+                                        <p class="text-xs text-slate-400">Crea el usuario y contraseña que entregarás a tu alumno</p>
+                                    </div>
+                                </div>
+
+                                <form onsubmit="handleCreateClient(event)" class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs text-slate-300 mb-1">Nombre del Alumno (Opcional)</label>
+                                        <input id="client-name" type="text" placeholder="Ej: Marcos Gómez" 
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-[#e2c792]">
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs text-slate-300 mb-1">Usuario de Acceso *</label>
+                                            <input id="client-user" type="text" required placeholder="Ej: marcos_trading" 
+                                                class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-[#e2c792]">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-slate-300 mb-1">Contraseña Asignada *</label>
+                                            <input id="client-pass" type="text" required placeholder="Ej: ClaveSegura2026" 
+                                                class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/15 text-white text-xs sm:text-sm focus:outline-none focus:border-[#e2c792]">
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="w-full btn-liquid-glass border-[#e2c792]/40 hover:bg-[#e2c792]/15 py-3 rounded-xl font-semibold text-[#e2c792] text-sm flex items-center justify-center gap-2 cursor-pointer">
+                                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                        <span>Crear y Activar Cliente</span>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Lista de Clientes Activos -->
+                            <div class="mt-6 pt-5 border-t border-white/10">
+                                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                                    Clientes Activos (${clients.length})
+                                </h4>
+                                ${clients.length === 0 ? `
+                                    <p class="text-xs text-slate-500 italic">Aún no has activado ninguna cuenta de cliente.</p>
+                                ` : `
+                                    <div class="max-h-40 overflow-y-auto space-y-2 pr-1">
+                                        ${clients.map(c => `
+                                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-black/35 border border-white/10 text-xs">
+                                                <div>
+                                                    <span class="font-semibold text-white">${escapeHtml(c.name)}</span>
+                                                    <span class="text-slate-400 ml-2">User: <code class="text-emerald-300">${escapeHtml(c.username)}</code> • Pass: <code class="text-[#e2c792]">${escapeHtml(c.password)}</code></span>
+                                                </div>
+                                                <button onclick="deleteClient('${c.id}')" class="text-red-400 hover:text-red-300 p-1 cursor-pointer" title="Revocar acceso">
+                                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                </button>
+                                            </div>
+                                        `).join("")}
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LISTADO DE VIDEOS PUBLICADOS (GESTIÓN ADMIN) -->
+                    <div class="border-t border-white/10 pt-8">
+                        <div class="flex items-center justify-between mb-5">
+                            <h3 class="font-display text-xl font-bold text-white">Clases Publicadas en el Curso (${videos.length})</h3>
+                        </div>
+
+                        ${videos.length === 0 ? `
+                            <div class="text-center py-10 rounded-2xl bg-black/25 border border-dashed border-white/15">
+                                <p class="text-sm text-slate-400">El curso está vacío actualmente. Publica tu primer video arriba.</p>
+                            </div>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                                ${videos.map((v, idx) => `
+                                    <div class="liquid-glass-card rounded-2xl p-4 flex flex-col justify-between">
+                                        <div>
+                                            <div class="flex items-center justify-between text-[11px] text-emerald-400 font-semibold mb-2">
+                                                <span>#${idx + 1} • ${escapeHtml(v.moduleTag)}</span>
+                                                <button onclick="deleteVideo('${v.id}')" class="text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer">
+                                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Eliminar
+                                                </button>
+                                            </div>
+                                            <h4 class="font-display font-semibold text-white text-base mb-1.5">${escapeHtml(v.title)}</h4>
+                                            <p class="text-xs text-slate-400 line-clamp-2">${escapeHtml(v.description || "Sin descripción adicional.")}</p>
+                                        </div>
+                                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-500">
+                                            <span>Tipo: ${v.sourceType === "youtube" ? "Stream Privado" : "Video HD"}</span>
+                                            <span>${v.createdAt}</span>
+                                        </div>
+                                    </div>
+                                `).join("")}
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Vista Exclusiva de Cliente (Estilo YouTube privado: SOLO reproducir, pausar, minimizar/pantalla completa)
+        function renderClientPlayerView(container) {
+            const videos = getVideos();
+
+            if (videos.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center max-w-md mx-auto py-10">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center mx-auto mb-4 text-emerald-400">
+                            <i data-lucide="film" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white mb-2">Tu cuenta está activa</h3>
+                        <p class="text-sm text-slate-400">
+                            El mentor aún está preparando y subiendo las primeras lecciones del curso. Vuelve pronto para comenzar tu formación.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Seleccionar video activo por defecto
+            if (!activeVideoId || !videos.some(v => v.id === activeVideoId)) {
+                activeVideoId = videos[0].id;
+            }
+            const currentVideo = videos.find(v => v.id === activeVideoId);
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+                    <!-- REPRODUCTOR PRINCIPAL (8 Columnas) -->
+                    <div class="lg:col-span-8 space-y-4">
+                        <div id="player-wrapper" oncontextmenu="return false;" class="relative rounded-2xl overflow-hidden bg-black border border-white/15 shadow-2xl aspect-video select-none">
+                            ${currentVideo.sourceType === "youtube" ? `
+                                <iframe 
+                                    id="yt-course-frame"
+                                    class="w-full h-full"
+                                    src="https://www.youtube-nocookie.com/embed/${currentVideo.src}?rel=0&modestbranding=1&showinfo=0" 
+                                    title="${escapeHtml(currentVideo.title)}"
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            ` : `
+                                <video 
+                                    id="course-video-player" 
+                                    class="w-full h-full object-contain bg-black" 
+                                    src="${currentVideo.src}" 
+                                    controls 
+                                    controlsList="nodownload noplaybackrate" 
+                                    disablePictureInPicture="false"
+                                    playsinline>
+                                </video>
+                            `}
+                        </div>
+
+                        <!-- Barra de controles limpios para el cliente (Play, Pausar, Minimizar / PiP) -->
+                        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-black/35 border border-white/10">
+                            <div>
+                                <span class="text-xs font-semibold text-emerald-400">${escapeHtml(currentVideo.moduleTag)}</span>
+                                <h3 class="font-display text-xl sm:text-2xl font-bold text-white mt-0.5">${escapeHtml(currentVideo.title)}</h3>
+                            </div>
+
+                            ${currentVideo.sourceType === "direct" ? `
+                                <div class="flex items-center gap-2">
+                                    <button onclick="togglePlayPause()" class="btn-liquid-primary px-4 py-2 rounded-xl text-xs font-semibold text-white flex items-center gap-1.5 cursor-pointer">
+                                        <i data-lucide="play" class="w-3.5 h-3.5"></i> Play / Pausa
+                                    </button>
+                                    <button onclick="toggleMinimizePiP()" class="btn-liquid-glass px-4 py-2 rounded-xl text-xs font-medium text-slate-200 flex items-center gap-1.5 cursor-pointer" title="Minimizar reproductor flotante">
+                                        <i data-lucide="picture-in-picture-2" class="w-3.5 h-3.5 text-[#e2c792]"></i> Minimizar
+                                    </button>
+                                </div>
+                            ` : `
+                                <span class="text-xs text-slate-400 flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i> Modo Solo Visualización
+                                </span>
+                            `}
+                        </div>
+
+                        ${currentVideo.description ? `
+                            <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-sm text-slate-300 leading-relaxed">
+                                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Resumen de la lección</p>
+                                ${escapeHtml(currentVideo.description)}
+                            </div>
+                        ` : ""}
+                    </div>
+
+                    <!-- LISTA DE CLASES DEL CURSO (4 Columnas - Estilo Playlist Privada) -->
+                    <div class="lg:col-span-4 rounded-2xl bg-black/35 border border-white/10 p-4">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                            <h4 class="font-display font-bold text-sm text-white flex items-center gap-2">
+                                <i data-lucide="list-video" class="w-4 h-4 text-emerald-400"></i>
+                                Contenido del Curso
+                            </h4>
+                            <span class="text-xs text-slate-400">${videos.length} clases</span>
+                        </div>
+
+                        <div class="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
+                            ${videos.map((v, index) => {
+                                const isActive = v.id === currentVideo.id;
+                                return `
+                                    <button onclick="selectCourseVideo('${v.id}')" class="w-full text-left p-3 rounded-xl transition flex items-start gap-3 cursor-pointer ${isActive ? 'bg-emerald-500/20 border border-emerald-400/40' : 'bg-white/[0.03] hover:bg-white/[0.08] border border-transparent'}">
+                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${isActive ? 'bg-emerald-500 text-white' : 'bg-white/10 text-slate-300'}">
+                                            ${isActive ? '<i data-lucide="play" class="w-3.5 h-3.5"></i>' : index + 1}
+                                        </div>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="text-[11px] font-medium ${isActive ? 'text-emerald-300' : 'text-slate-400'} truncate">${escapeHtml(v.moduleTag)}</p>
+                                            <p class="text-xs sm:text-sm font-semibold text-white truncate mt-0.5">${escapeHtml(v.title)}</p>
+                                        </div>
+                                    </button>
+                                `;
+                            }).join("")}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectCourseVideo(id) {
+            activeVideoId = id;
+            renderApp();
+        }
+
+        // Controles exclusivos del reproductor cliente (Play, Pausa, Minimizar PiP)
+        function togglePlayPause() {
+            const vid = document.getElementById("course-video-player");
+            if (!vid) return;
+            if (vid.paused) {
+                vid.play();
+            } else {
+                vid.pause();
+            }
+        }
+
+        async function toggleMinimizePiP() {
+            const vid = document.getElementById("course-video-player");
+            if (!vid) return;
+            try {
+                if (document.pictureInPictureElement) {
+                    await document.exitPictureInPicture();
+                } else if (document.pictureInPictureEnabled) {
+                    await vid.requestPictureInPicture();
+                } else {
+                    showToast("Tu navegador no soporta ventana minimizada flotante.");
+                }
+            } catch (err) {
+                showToast("Inicia la reproducción del video primero para minimizar.");
+            }
+        }
+
+        // Sanitización básica XSS
+        function escapeHtml(str) {
+            if (!str) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // =========================================================================
+        // 6. SISTEMA DE POP-UP DE RESEÑAS ALEATORIAS (3, 4 Y 5 ESTRELLAS)
+        // =========================================================================
+        const SPANISH_REVIEWS = [
+            { name: "Carlos Mendoza", stars: 5, text: "Empecé sin tener ni idea de qué era una vela japonesa. En pocos días ya entiendo perfectamente cómo analizar el gráfico con calma." },
+            { name: "Lucía Fernández", stars: 4, text: "Me encanta lo directo que es todo. Nada de relleno innecesario, van al grano y te explican cómo proteger tu capital desde el día uno." },
+            { name: "Javier Ortega", stars: 5, text: "Había probado otros cursos súper complicados y aquí por fin todo tiene sentido. La claridad con la que explican es de otro nivel." },
+            { name: "Sofía Navarro", stars: 3, text: "Muy buen curso para arrancar desde cero sin perderse. Voy por las primeras clases y se nota que está pensado para principiantes reales." },
+            { name: "Alejandro Ruiz", stars: 5, text: "La parte de gestión de riesgo y mentalidad vale oro. Te quita el miedo a empezar porque sabes exactamente qué hacer en cada escenario." },
+            { name: "Elena Morales", stars: 4, text: "Explicaciones súper limpias, paso a paso y muy fáciles de seguir. Lo recomiendo muchísimo si buscas aprender trading de forma seria." },
+            { name: "Diego Herrera", stars: 5, text: "El enfoque de eTrading te da una seguridad brutal. Por primera vez siento que tengo una estructura real frente a los mercados." },
+            { name: "Paula Domínguez", stars: 4, text: "Todo está muy bien organizado y se entiende a la primera. Ideal si partes desde cero y quieres aprender con buen pie." },
+            { name: "Hugo Castillo", stars: 3, text: "Bien estructurado y sencillo de comprender. Para quienes empezamos desde cero se agradece un lenguaje tan claro." },
+            { name: "Valeria Jiménez", stars: 5, text: "Brutal la facilidad con la que explican conceptos que antes me parecían imposibles. Muy contenta de haber dado el paso." }
+        ];
+
+        let reviewInterval = null;
+        let reviewDismissedPermanently = false;
+        let lastReviewIndex = -1;
+
+        function showRandomReview() {
+            if (reviewDismissedPermanently) return;
+
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * SPANISH_REVIEWS.length);
+            } while (idx === lastReviewIndex && SPANISH_REVIEWS.length > 1);
+            lastReviewIndex = idx;
+
+            const review = SPANISH_REVIEWS[idx];
+            const popup = document.getElementById("review-popup");
+            const avatarEl = document.getElementById("review-avatar");
+            const nameEl = document.getElementById("review-name");
+            const starsEl = document.getElementById("review-stars");
+            const textEl = document.getElementById("review-text");
+
+            // Iniciales
+            const initials = review.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+            avatarEl.textContent = initials;
+            nameEl.textContent = review.name;
+            textEl.textContent = `"${review.text}"`;
+
+            // Renderizar 3, 4 o 5 estrellas
+            let starsHtml = "";
+            for (let i = 1; i <= 5; i++) {
+                if (i <= review.stars) {
+                    starsHtml += `<svg class="w-3.5 h-3.5 fill-current text-[#e2c792]" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+                } else {
+                    starsHtml += `<svg class="w-3.5 h-3.5 text-slate-600 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+                }
+            }
+            starsEl.innerHTML = starsHtml;
+
+            // Mostrar con transición suave
+            popup.classList.remove("translate-y-8", "opacity-0", "pointer-events-none");
+            popup.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+
+            // Ocultar suavemente tras 6.5 segundos antes de la siguiente rotación
+            setTimeout(() => {
+                if (!reviewDismissedPermanently) {
+                    popup.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
+                    popup.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+                }
+            }, 6500);
+        }
+
+        function dismissReviewPopup() {
+            const popup = document.getElementById("review-popup");
+            popup.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
+            popup.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+        }
+
+        // Inicialización al cargar la página
+        window.addEventListener("DOMContentLoaded", () => {
+            renderApp();
+            // Primera reseña tras 3.5 segundos, luego cada 11 segundos
+            setTimeout(() => {
+                showRandomReview();
+                reviewInterval = setInterval(showRandomReview, 11000);
+            }, 3500);
+        });
+    </script>
+</body>
+</html>
